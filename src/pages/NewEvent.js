@@ -1,6 +1,5 @@
 import { json, redirect } from "react-router-dom";
 import EventForm from "../components/EventForm";
-import EditEventPage from "./EditEvent";
 
 function NewEventPage() {
     return <EventForm />;
