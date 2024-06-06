@@ -1,6 +1,17 @@
-function EditEventPage() {
+import { useRouteLoaderData } from 'react-router-dom';
 
-    return (<><h1>EditEventPage</h1></>);
+import EventForm from '../components/EventForm';
+
+function EditEventPage() {
+    // get higher level loader
+    const data = useRouteLoaderData('event-detail');
+    const event = data.event;
+
+    return (
+        <>
+            <EventForm event={event} />
+        </>
+    );
 
 }
 export default EditEventPage;

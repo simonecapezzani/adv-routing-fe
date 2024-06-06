@@ -28,6 +28,7 @@ import EditEventPage from './pages/EditEvent';
 import RootLayout from './pages/RootLayout';
 import EventsRootLayout from './pages/EventsRoot';
 import ErrorPage from './pages/Error';
+import EventItem from './components/EventItem';
 
 const router = createBrowserRouter([
   {
@@ -37,13 +38,28 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       {
-        path: 'events', element: <EventsRootLayout />, children: [
+        path: 'events',
+        element: <EventsRootLayout />,
+        children: [
           {
-            path: '', element: <EventsPage />, loader: eventsLoader
+            index: true,
+            element: <EventsPage />,
+            loader: eventsLoader
           },
-          { path: ':eventId', element: <EventDetailPage />, loader: eventDetailLoader },
+          {
+            path: ':eventId',
+            // define a route id lo use useRouteLoaderData hook
+            id: 'event-detail',
+            loader: eventDetailLoader,
+            children: [
+              {
+                index: true,
+                element: <EventDetailPage />,
+              },
+              { path: 'edit', element: <EditEventPage /> },
+            ]
+          },
           { path: 'new', element: <NewEventPage /> },
-          { path: ':eventId/edit', element: <EditEventPage /> },
         ]
       }
 

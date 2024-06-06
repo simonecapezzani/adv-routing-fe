@@ -1,9 +1,9 @@
-import { useLoaderData,json } from "react-router-dom";
+import { json, useRouteLoaderData } from "react-router-dom";
 import EventItem from '../components/EventItem';
 
 function EventDetailPage() {
-
-    const data = useLoaderData();
+    // get higher level loader
+    const data = useRouteLoaderData('event-detail');
 
     return (
         <EventItem event={data.event} />
@@ -19,9 +19,11 @@ export async function loader({ request, params }) {
     const response = await fetch('http://localhost:8080/events/' + id);
 
     if (!response.ok) {
-        return json(
-            { message: 'Could not fetch details' },
-            { status: 500 })
+
+        throw json(
+            { message: 'Could not fetch events.' },
+            { status: 500 }
+        );
     } else {
         return response;
     }
